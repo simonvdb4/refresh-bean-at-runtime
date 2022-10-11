@@ -1,10 +1,7 @@
 package com.refresh.bean.refreshbean.service;
 
 import com.refresh.bean.refreshbean.service.domain.Boontje;
-import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
-import org.springframework.beans.factory.config.RuntimeBeanNameReference;
-import org.springframework.beans.factory.parsing.BeanComponentDefinition;
-import org.springframework.beans.factory.support.BeanDefinitionBuilder;
+import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.context.ApplicationContext;
@@ -19,19 +16,19 @@ public class RefreshBeanService {
     }
 
     public void refreshBean() {
-//        context.getStartupDate()
-        AutowireCapableBeanFactory factory =
-                context.getAutowireCapableBeanFactory();
-        BeanDefinitionRegistry registry = (BeanDefinitionRegistry) factory;
-        String beanID = "refreshBoontje";
-        registry.removeBeanDefinition(beanID);
+        // Retrieve BeanDefinitionRegistry
+        BeanDefinitionRegistry registry = (BeanDefinitionRegistry) context.getAutowireCapableBeanFactory();
 
-        RootBeanDefinition beanDefinition =
-                new RootBeanDefinition(Boontje.class); //The service implementation
+        // remove bean
+        String beanNameOld = "refreshBoontje";
+        registry.removeBeanDefinition(beanNameOld);
 
-        beanDefinition.setAttribute("property", "test");
-//        beanDefinition.set
+        // create bean
+        RootBeanDefinition beanDefinition = new RootBeanDefinition(Boontje.class);
+        beanDefinition.setPropertyValues(new MutablePropertyValues().add("property", "new property"));
 
-        registry.registerBeanDefinition(beanID, beanDefinition);
+        // add bean to registry
+        String beanNameNew = "refreshBoontje";
+        registry.registerBeanDefinition(beanNameNew, beanDefinition);
     }
 }
