@@ -2,6 +2,7 @@ package com.refresh.bean.refreshbean.controller;
 
 import com.refresh.bean.refreshbean.service.RefreshBeanService;
 import com.refresh.bean.refreshbean.service.domain.Boontje;
+import com.refresh.bean.refreshbean.util.BoontjeName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -25,12 +26,12 @@ public class RefreshBeanController {
 
     @GetMapping("/refresh")
     public ResponseEntity<Void> refreshBean() {
-        Boontje refreshBoontje = (Boontje) context.getBean("refreshBoontje");
+        Boontje refreshBoontje = (Boontje) context.getBean(BoontjeName.BEAN_NAME_OLD.beanName);
         logRefreshBoontje(refreshBoontje);
 
         refreshBeanService.refreshBean();
 
-        refreshBoontje = (Boontje) context.getBean("refreshBoontje");
+        refreshBoontje = (Boontje) context.getBean(BoontjeName.BEAN_NAME_NEW.beanName);
         logRefreshBoontje(refreshBoontje);
 
         return ResponseEntity.ok().build();

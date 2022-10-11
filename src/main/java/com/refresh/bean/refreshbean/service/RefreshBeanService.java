@@ -1,6 +1,7 @@
 package com.refresh.bean.refreshbean.service;
 
 import com.refresh.bean.refreshbean.service.domain.Boontje;
+import com.refresh.bean.refreshbean.util.BoontjeName;
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.RootBeanDefinition;
@@ -20,15 +21,13 @@ public class RefreshBeanService {
         BeanDefinitionRegistry registry = (BeanDefinitionRegistry) context.getAutowireCapableBeanFactory();
 
         // remove bean
-        String beanNameOld = "refreshBoontje";
-        registry.removeBeanDefinition(beanNameOld);
+        registry.removeBeanDefinition(BoontjeName.BEAN_NAME_OLD.beanName);
 
         // create bean
         RootBeanDefinition beanDefinition = new RootBeanDefinition(Boontje.class);
         beanDefinition.setPropertyValues(new MutablePropertyValues().add("property", "new property"));
 
         // add bean to registry
-        String beanNameNew = "refreshBoontje";
-        registry.registerBeanDefinition(beanNameNew, beanDefinition);
+        registry.registerBeanDefinition(BoontjeName.BEAN_NAME_NEW.beanName, beanDefinition);
     }
 }
