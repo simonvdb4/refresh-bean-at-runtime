@@ -24,6 +24,14 @@ public class RefreshBeanController {
         this.context = context;
     }
 
+    @GetMapping
+    public ResponseEntity<Void> logBean() {
+        Boontje refreshBoontje = (Boontje) context.getBean(BoontjeName.BEAN_NAME_OLD.beanName);
+        logRefreshBoontje(refreshBoontje);
+
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/refresh")
     public ResponseEntity<Void> refreshBean() {
         Boontje refreshBoontje = (Boontje) context.getBean(BoontjeName.BEAN_NAME_OLD.beanName);
