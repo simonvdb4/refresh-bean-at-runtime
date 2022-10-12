@@ -26,7 +26,7 @@ public class RefreshBeanController {
 
     @GetMapping
     public ResponseEntity<Void> logBean() {
-        Boontje refreshBoontje = (Boontje) context.getBean(BoontjeName.BEAN_NAME_OLD.beanName);
+        Boontje refreshBoontje = getBoontje(BoontjeName.BEAN_NAME_OLD.beanName);
         logRefreshBoontje(refreshBoontje);
 
         return ResponseEntity.ok().build();
@@ -34,15 +34,19 @@ public class RefreshBeanController {
 
     @GetMapping("/refresh")
     public ResponseEntity<Void> refreshBean() {
-        Boontje refreshBoontje = (Boontje) context.getBean(BoontjeName.BEAN_NAME_OLD.beanName);
+        Boontje refreshBoontje = getBoontje(BoontjeName.BEAN_NAME_OLD.beanName);
         logRefreshBoontje(refreshBoontje);
 
         refreshBeanService.refreshBean();
 
-        refreshBoontje = (Boontje) context.getBean(BoontjeName.BEAN_NAME_NEW.beanName);
+        refreshBoontje = getBoontje(BoontjeName.BEAN_NAME_NEW.beanName);
         logRefreshBoontje(refreshBoontje);
 
         return ResponseEntity.ok().build();
+    }
+
+    private Boontje getBoontje(String beanName) {
+        return (Boontje) context.getBean(beanName);
     }
 
     private void logRefreshBoontje(Boontje refreshBoontje) {
