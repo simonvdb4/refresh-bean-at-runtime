@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.Resource;
+
 @Controller
 @RequestMapping("/bean")
 public class RefreshBeanController {
@@ -18,7 +20,6 @@ public class RefreshBeanController {
 
     public final RefreshBeanService refreshBeanService;
     public final ApplicationContext context;
-
     public RefreshBeanController(RefreshBeanService refreshBeanService, ApplicationContext context) {
         this.refreshBeanService = refreshBeanService;
         this.context = context;
